@@ -311,16 +311,6 @@ export default {
 
 <style lang="less">
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  position: absolute;
-  left: 0px;
-  right: 0px;
-  top: 0px;
-  bottom: 0px;
-  display: flex;
-  flex-direction: column;
   .header {
     background-color: #F5F5F5;
     height: 180px;
@@ -396,6 +386,7 @@ export default {
       .thumbnail {
         margin-top: 0px;
         margin-bottom: 0px;
+        cursor: pointer;
         li {
           list-style: none;
           height: 88px;
@@ -436,6 +427,7 @@ export default {
       margin-left: 20px;
       width: 800px;
       img {
+        cursor: pointer;
         width: 100%;
         box-shadow: 6px 4px 16px #9E9E9E;
       }
@@ -489,6 +481,7 @@ export default {
       margin-left: 350px;
       padding-top: 30px;
       .image {
+        cursor: pointer;
         width: 280px;
         margin-right: 20px;
         margin-bottom: 20px;
