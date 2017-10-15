@@ -24,120 +24,35 @@
     <div class="body" v-if="enter">
       <div class="body-left">
         <ul class="thumbnail">
-          <li>
-            <img src="../assets/test.png" alt="">
+          <li v-for="(item, index) in describeData" :key="index" @click="handleClickNavbar(index)">
+            <img :src="jointImage(item.cover)" alt="">
             <span class="describe">
               <div class="date">
-                2017年5月
+                {{formatDate('YYYY年MM月', item.createTime)}}
               </div>
               <div class="name">
                 中国·浙江·舟山
               </div>
               <div class="title">
-                舟山府
-              </div>
-            </span>
-          </li>
-          <li>
-            <img src="../assets/test.png" alt="">
-            <span class="describe">
-              <div class="date">
-                2017年5月
-              </div>
-              <div class="name">
-                中国·浙江·舟山
-              </div>
-              <div class="title">
-                舟山府
-              </div>
-            </span>
-          </li>
-          <li>
-            <img src="../assets/test.png" alt="">
-            <span class="describe">
-              <div class="date">
-                2017年5月
-              </div>
-              <div class="name">
-                中国·浙江·舟山
-              </div>
-              <div class="title">
-                舟山府
-              </div>
-            </span>
-          </li>
-          <li>
-            <img src="../assets/test.png" alt="">
-            <span class="describe">
-              <div class="date">
-                2017年5月
-              </div>
-              <div class="name">
-                中国·浙江·舟山
-              </div>
-              <div class="title">
-                舟山府
-              </div>
-            </span>
-          </li>
-          <li>
-            <img src="../assets/test.png" alt="">
-            <span class="describe">
-              <div class="date">
-                2017年5月
-              </div>
-              <div class="name">
-                中国·浙江·舟山
-              </div>
-              <div class="title">
-                舟山府
-              </div>
-            </span>
-          </li>
-          <li>
-            <img src="../assets/test.png" alt="">
-            <span class="describe">
-              <div class="date">
-                2017年5月
-              </div>
-              <div class="name">
-                中国·浙江·舟山
-              </div>
-              <div class="title">
-                舟山府
-              </div>
-            </span>
-          </li>
-          <li>
-            <img src="../assets/test.png" alt="">
-            <span class="describe">
-              <div class="date">
-                2017年5月
-              </div>
-              <div class="name">
-                中国·浙江·舟山
-              </div>
-              <div class="title">
-                舟山府
+                {{item.name}}
               </div>
             </span>
           </li>
         </ul>
       </div>
       <div class="body-right">
-        <img src="../assets/test.png" alt="" @click="indexImgClick">
+        <img :src="jointImageOrigin(coverItem.cover)" alt="" @click="indexImgClick(coverItem)">
       </div>
     </div>
     <div class="body-cover" v-else>
-      <div class="cover-left" v-if="!showDetial">
+      <div class="cover-left animated fadeIn" v-if="!showDetial">
         <div class="cover-top">
           <span class="works" @click="handleClick">作品·WORKS</span>
         </div>
         <ul class="cover-bottom">
-          <li v-for="(item, index) in cityArea" :key="index" :class="[index === 0 ? 'active' : '']" @click="changeAreaChoose">
-            {{item.name}}
+          <li v-for="(item, index) in cityArea" :key="index" :class="[index === 0 ? 'active' : '']" @click="changeAreaChoose(item, $event)">
+            {{item.area}}
           </li>
-
         </ul>
       </div>
       <div class="cover-left" v-else>
@@ -145,61 +60,28 @@
           <span class="works" @click="handleClick">作品·WORKS</span>
         </div>
         <ul class="cover-bottom">
-          <li v-for="(item, index) in townArea" :key="index" class="active">
-            {{item.name}}
+          <li class="active">
+            {{townArea.name}}
           </li>
-          <li @click="showDetial = false">
+          <li @click="handleReturnCilck">
             返回
           </li>
         </ul>
       </div>
       <div class="cover-right" v-if="!showDetial">
-        <div class="image" @click="handleShowDetail">
-          <img src="../assets/test.png" alt="">
-        </div>
-        <div class="image" @click="handleShowDetail">
-          <img src="../assets/test.png" alt="">
-        </div>
-        <div class="image" @click="handleShowDetail">
-          <img src="../assets/test.png" alt="">
-        </div>
-        <div class="image" @click="handleShowDetail">
-          <img src="../assets/test.png" alt="">
-        </div>
-        <div class="image" @click="handleShowDetail">
-          <img src="../assets/test.png" alt="">
-        </div>
-        <div class="image" @click="handleShowDetail">
-          <img src="../assets/test.png" alt="">
+        <div class="image" v-for="(item, index) in cityAreaIndex.projectList" :key="index" @click="handleShowDetail(item)">
+          <img :src="jointImageMiddle(item.cover)" alt="">
         </div>
       </div>
       <div class="cover-right" v-else>
         <ul class="detail-list">
-          <li>
-            <img src="../assets/test.png" alt="">
-          </li>
-          <li>
-            <img src="../assets/test.png" alt="">
-          </li>
-          <li>
-            <img src="../assets/test.png" alt="">
-          </li>
-          <li>
-            <img src="../assets/test.png" alt="">
-          </li>
-          <li>
-            <img src="../assets/test.png" alt="">
-          </li>
-           <li>
-            <img src="../assets/test.png" alt="">
-          </li>
-           <li>
-            <img src="../assets/test.png" alt="">
+          <li v-for="(item, index) in townArea.imageList" :key="index" @click="handleClickTownIndex(item)">
+            <img :src="jointImage(item)" alt="">
           </li>
         </ul>
 
         <div class="big-img">
-            <img src="../assets/test.png" alt="">
+          <img :src="jointImageOrigin(townAreaIndexImage)" alt="">
         </div>
       </div>
     </div>
@@ -207,10 +89,15 @@
 </template>
 
 <script>
+import formatDate from '../config';
 export default {
   name: 'home',
   data() {
     return {
+      describeData: [],
+      coverItem: {
+        cover: ''
+      },
       tabList: [
         {
           name: '项目资料',
@@ -244,27 +131,12 @@ export default {
         },
       ],
       cityArea: [
-        {
-          name: '杭州区域'
-        },
-        {
-          name: '温州区域'
-        },
-        {
-          name: '宁波区域'
-        },
-        {
-          name: '浙北区域'
-        },
-        {
-          name: '浙中区域'
-        },
+
       ],
-      townArea: [
-        {
-          name: '舟山府'
-        }
-      ],
+
+      cityAreaIndex: {},
+      townArea: {},
+      townAreaIndexImage: '',
       enter: true,    //是否显示首页
       showDetial: false // 是否显示具体的详情页
     }
@@ -273,11 +145,14 @@ export default {
   created() {
     $.ajax({
       type: 'post',
-      url: 'http://192.168.2.249:8080/backend/list',
+      url: window.Config.server + '/home/index',
       data: {},
       dataType: "json",
-      success: function(data) {
-        console.log(data)
+      success: (res) => {
+        this.describeData = res.data;
+        if (res.data) {
+          this.coverItem = res.data[0]
+        }
       }
     })
   },
@@ -285,25 +160,156 @@ export default {
   methods: {
     handleClick() {
       this.enter = !this.enter;
+      if (this.cityArea.length === 0) {
+        $.ajax({
+          type: 'post',
+          url: window.Config.server + '/home/area',
+          data: {},
+          dataType: 'json',
+          success: (res) => {
+            this.cityArea = res.data
+            if (res.data) {
+              this.cityAreaIndex = res.data[0]
+            }
+          }
+        })
+      }
+    },
+
+    // 点击首页左边图标
+    handleClickNavbar(index) {
+      this.coverItem = this.describeData[index];
     },
 
     // 切换区域选项
-    changeAreaChoose(event) {
+    changeAreaChoose(item, event) {
       if (!event.target.classList.contains('active')) {
         $('.cover-bottom li').siblings().removeClass('active');
         event.target.classList.add('active');
+        this.cityAreaIndex = item;
       }
     },
 
     // 点击具体区域内某个图片
-    handleShowDetail() {
+    handleShowDetail(item) {
       this.showDetial = true;
+      $.ajax({
+        type: 'post',
+        url: window.Config.server + '/home/detail',
+        data: {
+          id: item.id
+        },
+        dataType: 'json',
+        success: (res) => {
+          this.townArea = res.data
+          let imageList = res.data.images.split(',');
+          this.townArea.imageList = imageList;
+          this.townAreaIndexImage = imageList[0];
+        }
+      })
+    },
+
+    // 点击town 列表里具体某个图片
+    handleClickTownIndex(item) {
+      this.townAreaIndexImage = item;
+    },
+
+    // 返回按钮
+    handleReturnCilck() {
+      this.showDetial = false
+      if (this.cityArea.length === 0) {
+        $.ajax({
+          type: 'post',
+          url: window.Config.server + '/home/area',
+          data: {},
+          dataType: 'json',
+          success: (res) => {
+            this.cityArea = res.data
+            if (res.data) {
+              this.cityAreaIndex = res.data[0]
+            }
+          }
+        })
+      }
     },
 
     // 首页图片点击
-    indexImgClick() {
+    indexImgClick(coverItem) {
       this.enter = false;
       this.showDetial = true;
+      $.ajax({
+        type: 'post',
+        url: window.Config.server + '/home/detail',
+        data: {
+          id: coverItem.id
+        },
+        dataType: 'json',
+        success: (res) => {
+          this.townArea = res.data
+          let imageList = res.data.images.split(',');
+          this.townArea.imageList = imageList;
+          this.townAreaIndexImage = imageList[0];
+        }
+      })
+    },
+
+    jointImage(url) {
+      return window.Config.server + '/resource/' + url + '?w=150&h=88';
+    },
+
+    jointImageMiddle(url) {
+      return window.Config.server + '/resource/' + url + '?w=280&h=165';
+    },
+
+    jointImageOrigin(url) {
+      return window.Config.server + '/resource/' + url + '?w=750&h=440';
+    },
+
+    formatDate(format, timestamp) {
+      if (!timestamp)
+        return '';
+
+      var date = new Date(parseInt(timestamp));
+      var y = date.getFullYear(),
+        m = date.getMonth() + 1,
+        d = date.getDate(),
+        h = date.getHours(),
+        i = date.getMinutes(),
+        s = date.getSeconds(),
+        w = date.getDay(),
+        week = [
+          '星期日',
+          '星期一',
+          '星期二',
+          '星期三',
+          '星期四',
+          '星期五',
+          '星期六'
+        ];
+
+      m = m < 10
+        ? '0' + m
+        : m;
+      d = d < 10
+        ? '0' + d
+        : d;
+      h = h < 10
+        ? '0' + h
+        : h;
+      i = i < 10
+        ? '0' + i
+        : i;
+      s = s < 10
+        ? '0' + s
+        : s;
+      return format
+        .replace('YYYY', y)
+        .replace('MM', m)
+        .replace('DD', d)
+        .replace('H', h)
+        .replace('i', i)
+        .replace('s', s)
+        .replace('WW', week[w]);
     }
   }
 }
@@ -379,7 +385,7 @@ export default {
     display: flex;
     .body-left {
       width: 440px;
-      height: 500px;
+      height: 480px;
       overflow-y: scroll;
       scrollbar-arrow-color: #947C4A;
       padding-right: 30px;
@@ -480,6 +486,7 @@ export default {
     .cover-right {
       margin-left: 350px;
       padding-top: 30px;
+      margin-right: 50px;
       .image {
         cursor: pointer;
         width: 280px;
@@ -499,6 +506,7 @@ export default {
         padding-left: 0px;
         vertical-align: middle;
         li {
+          cursor: pointer;
           width: 130px;
           img {
             width: 100%;
@@ -518,34 +526,46 @@ export default {
   }
 }
 
-@media screen and (min-width: 1440px) {
-  #app {
-    zoom: 1.2;
+@media screen and (min-width: 1640px) {
+  .home-main {
+    zoom: 1.2
+  }
+}
+
+@media screen and (min-width: 1440px) and (max-width: 1639px) {
+  .home-main {
+    zoom: 1.1;
   }
 }
 
 
-@media screen and (min-width: 1219px) and (max-width: 1439px) {
-  #app {
+@media screen and (min-width: 1329px) and (max-width: 1439px) {
+  .home-main {
     zoom: 1;
   }
 }
 
-@media screen and (min-width: 1100px) and (max-width: 1220px) {
-  #app {
+@media screen and (min-width: 1200px) and (max-width: 1328px) {
+  .home-main {
     zoom: 0.9;
   }
 }
 
-@media screen and (min-width: 980px) and(max-width: 1099px) {
-  #app {
+@media screen and (min-width: 1065px) and(max-width: 1199px) {
+  .home-main {
     zoom: 0.8;
   }
 }
 
-@media screen and (max-width: 979px) {
-  #app {
+@media screen and (min-width: 935px) and (max-width: 1064px) {
+  .home-main {
     zoom: 0.7;
+  }
+}
+
+@media screen and (max-width: 934px) {
+  .home-main {
+    zoom: 0.6;
   }
 }
 </style>

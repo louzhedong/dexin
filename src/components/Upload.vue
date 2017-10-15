@@ -2,7 +2,7 @@
  * @Author: Michael 
  * @Date: 2017-10-13 20:45:38 
  * @Last Modified by: Michael
- * @Last Modified time: 2017-10-14 18:32:17
+ * @Last Modified time: 2017-10-15 20:10:21
  * 上传页面
  */
 
@@ -15,19 +15,30 @@
           <el-input v-model="form.name" placeholder="必填"></el-input>
         </el-form-item>
         <el-form-item label="项目编号">
-          <el-input v-model="form.id" placeholder="选填"></el-input>
+          <el-input v-model="form.code" placeholder="选填"></el-input>
         </el-form-item>
-        <el-form-item label="项目区域" prop="region">
-          <el-select v-model="form.region" placeholder="请选择项目区域">
-            <el-option label="杭州区域" value="hangzhou"></el-option>
-            <el-option label="温州区域" value="wenzhou"></el-option>
-            <el-option label="宁波区域" value="ningbo"></el-option>
-            <el-option label="浙北区域" value="zhebei"></el-option>
-            <el-option label="浙中区域" value="zhezhong"></el-option>
+        <el-form-item label="项目区域" prop="area">
+          <el-select v-model="form.area" placeholder="请选择项目区域">
+            <el-option label="杭州区域" value="杭州区域"></el-option>
+            <el-option label="温州区域" value="温州区域"></el-option>
+            <el-option label="宁波区域" value="宁波区域"></el-option>
+            <el-option label="浙北区域" value="浙北区域"></el-option>
+            <el-option label="浙中区域" value="浙中区域"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="项目描述" prop="describe">
-          <el-input type="textarea" v-model="form.describe"></el-input>
+        <el-form-item label="创建时间" prop="createTime">
+          <el-date-picker v-model="form.createTime" type="date" placeholder="选择日期">
+          </el-date-picker>
+        </el-form-item>
+        <el-form-item label="创建人">
+          <el-input v-model="form.createUser"></el-input>
+        </el-form-item>
+        <el-form-item label="是否首页">
+          <el-radio v-model="form.isTop" label="1">是</el-radio>
+          <el-radio v-model="form.isTop" label="2">否</el-radio>
+        </el-form-item>
+        <el-form-item label="项目描述" prop=" description">
+          <el-input type="textarea" v-model="form. description"></el-input>
         </el-form-item>
         <el-form-item label="封面图片">
           <el-upload :action="uploadUrl" list-type="picture-card" :on-success="uploadCover" :on-remove="removeCover">
@@ -48,17 +59,21 @@
 </template>
 
 <script>
+import router from '../router';
 export default {
   data() {
     return {
       uploadUrl: window.Config.server + '/image/upload',
       form: {
         name: '',   // 项目名称
-        id: '',   // 项目编号
-        region: '',  // 项目区域
-        describe: '',  // 项目描述,
+        code: '',   // 项目编号
+        area: '',  // 项目区域
+        description: '',  // 项目描述,
         cover: [],   // 封面图片
-        content: [], //内容图片
+        content: [], //内容图片,
+        createTime: '', //创建时间
+        createUser: '', //创建人
+        isTop: '1', // 是否首页
       },
       rules: {
         name: [
@@ -68,7 +83,7 @@ export default {
             trigger: 'blur'
           }
         ],
-        region: [
+        area: [
           {
             required: true,
             message: '请选择项目区域',
@@ -81,6 +96,14 @@ export default {
             message: '请填写项目描述',
             trigger: 'blur'
           }
+        ],
+        createTime: [
+          {
+            type: 'date',
+            required: true,
+            message: '请选择创建时间',
+            trigger: 'blur'
+          }
         ]
       }
     }
@@ -88,12 +111,9 @@ export default {
   methods: {
     // 上传封面
     uploadCover(response, file, fileList) {
+      console.log(response);
       const data = response.data;
-      let item = {
-        name: file.name,
-        url: 'http://10.0.0.7:4869/' + data.info.md5
-      }
-      this.form.cover.push(item);
+      this.form.cover.push(data);
       if (fileList.length > 1) {
         fileList.splice(0, 1);
         this.form.cover.splice(0, 1);
@@ -109,10 +129,7 @@ export default {
         this.form.content = [];
         fileList.map((item) => {
           if (item.response) {
-            this.form.content.push({
-              name: item.name,
-              url: 'http://10.0.0.7:4869/' + item.response.data.info.md5
-            })
+            this.form.content.push(item.response.data)
           }
         })
       }
@@ -122,10 +139,7 @@ export default {
         this.form.content = [];
         fileList.map((item) => {
           if (item.response) {
-            this.form.content.push({
-              name: item.name,
-              url: 'http://10.0.0.7:4869/' + item.response.data.info.md5
-            })
+            this.form.content.push(item.response.data)
           }
         })
       }
@@ -133,15 +147,48 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
+          if (this.form.cover.length === 0) {
+            this.$message({
+              type: 'warning',
+              message: '请上传封面图片'
+            })
+          }
           this.$confirm('确认新建作品吗？', '提示', {
             confirmButtonText: '确定',
             cancelButtonText: '取消',
             type: 'warning'
           }).then(() => {
-            this.$message({
-              type: 'success',
-              message: '新建成功！'
-            });
+            let form = this.form;
+            let param = {
+              name: form.name,
+              code: form.code,
+              area: form.area,
+              description: form.description,
+              createTime: new Date(this.createTime).valueOf(),
+              cover: form.cover[0],
+              images: form.content.join(','),
+              createUser: form.createUser,
+              isTop: form.isTop
+            }
+            $.ajax({
+              type: 'post',
+              url: window.Config.server + '/backend/add',
+              data: param,
+              dataType: "json",
+              success: () => {
+                router.go(0);
+                this.$message({
+                  type: 'success',
+                  message: '新建成功！'
+                });
+              },
+              error: () => {
+                this.$message({
+                  type: 'error',
+                  message: '新建失败！'
+                });
+              }
+            })
           }).catch(() => {
             return;
           })
