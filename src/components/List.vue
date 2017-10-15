@@ -2,13 +2,13 @@
  * @Author: Michael 
  * @Date: 2017-10-15 20:10:39 
  * @Last Modified by: Michael
- * @Last Modified time: 2017-10-15 22:24:03
+ * @Last Modified time: 2017-10-15 23:03:32
  * 后台表格
  */
 
 <template>
   <div class="list-content">
-    <el-dialog :title="operate === 'add' ? '添加项目' : '修改项目'" :visible.sync="dialogTableVisible">
+    <el-dialog :title="operate === 'add' ? '添加项目' : '修改项目'" :visible.sync="dialogTableVisible" @close="handleCloseDialog">
       <el-form ref="form" label-width="80px" :rules="rules" :model="form">
         <el-form-item label="项目名称" prop="name">
           <el-input v-model="form.name" placeholder="必填"></el-input>
@@ -40,12 +40,12 @@
           <el-input type="textarea" v-model="form. description"></el-input>
         </el-form-item>
         <el-form-item label="封面图片">
-          <el-upload :action="uploadUrl" list-type="picture-card" :on-success="uploadCover" :on-remove="removeCover">
+          <el-upload :action="uploadUrl" ref="uploadCover" list-type="picture-card" :on-success="uploadCover" :on-remove="removeCover">
             <i class="el-icon-plus"></i>
           </el-upload>
         </el-form-item>
         <el-form-item label="内容图片">
-          <el-upload :action="uploadUrl" multiple :on-success="uploadContent" :on-remove="removeContent">
+          <el-upload :action="uploadUrl" ref="uploadContent" multiple :on-success="uploadContent" :on-remove="removeContent">
             <el-button size="small" type="primary">点击上传</el-button>
           </el-upload>
         </el-form-item>
@@ -214,7 +214,7 @@ export default {
 
     // 上传封面
     uploadCover(response, file, fileList) {
-      console.log(response);
+      console.log(fileList);
       const data = response.data;
       this.form.cover.push(data);
       if (fileList.length > 1) {
@@ -265,7 +265,7 @@ export default {
           }).then(() => {
             let form = this.form;
             let param = {
-              id: this.id,
+              id: form.id,
               name: form.name,
               code: form.code,
               area: form.area,
@@ -297,6 +297,8 @@ export default {
                   };
                   this.dialogTableVisible = false;
                   this.getTableList(this.pageNum);
+                  this.$refs.uploadCover.clearFiles();
+                  this.$refs.uploadContent.clearFiles();
                   this.$message({
                     type: 'success',
                     message: '编辑成功！'
@@ -330,6 +332,8 @@ export default {
                   };
                   this.dialogTableVisible = false;
                   this.getTableList(this.pageNum);
+                  this.$refs.uploadCover.clearFiles();
+                  this.$refs.uploadContent.clearFiles();
                   this.$message({
                     type: 'success',
                     message: '新建成功！'
@@ -365,6 +369,8 @@ export default {
         isTop: '1', // 是否首页
       };
       this.dialogTableVisible = false;
+      this.$refs.uploadCover.clearFiles();
+      this.$refs.uploadContent.clearFiles();
     },
 
     formatDate(row, column, timestamp) {
