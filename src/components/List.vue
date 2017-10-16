@@ -2,7 +2,7 @@
  * @Author: Michael 
  * @Date: 2017-10-15 20:10:39 
  * @Last Modified by: Michael
- * @Last Modified time: 2017-10-15 23:03:32
+ * @Last Modified time: 2017-10-16 17:12:03
  * 后台表格
  */
 
@@ -40,12 +40,12 @@
           <el-input type="textarea" v-model="form. description"></el-input>
         </el-form-item>
         <el-form-item label="封面图片">
-          <el-upload :action="uploadUrl" ref="uploadCover" list-type="picture-card" :on-success="uploadCover" :on-remove="removeCover">
+          <el-upload :action="uploadUrl" ref="uploadCover" list-type="picture-card" :on-success="uploadCover" :on-remove="removeCover" :file-list="form.coverList">
             <i class="el-icon-plus"></i>
           </el-upload>
         </el-form-item>
         <el-form-item label="内容图片">
-          <el-upload :action="uploadUrl" ref="uploadContent" multiple :on-success="uploadContent" :on-remove="removeContent">
+          <el-upload :action="uploadUrl" ref="uploadContent" multiple :on-success="uploadContent" :on-remove="removeContent" :file-list="form.contentList" list-type="picture">
             <el-button size="small" type="primary">点击上传</el-button>
           </el-upload>
         </el-form-item>
@@ -100,6 +100,8 @@ export default {
         description: '',  // 项目描述,
         cover: [],   // 封面图片
         content: [], //内容图片,
+        coverList: [],
+        contentList: [],
         createTime: '', //创建时间
         createUser: '', //创建人
         isTop: '1', // 是否首页
@@ -198,14 +200,31 @@ export default {
     handleEdit(item) {
       this.operate = 'edit';
       this.dialogTableVisible = true;
+      let coverListItem = {
+        name: item.cover,
+        url: window.Config.server + '/resource/' + item.cover + '?w=146&h=146'
+      }
+      let contentList = [];
+      let imagesList = item.images.split(',');
+      if (imagesList) {
+        imagesList.map((temp) => {
+          contentList.push({
+            name: temp,
+            url: window.Config.server + '/resource/' + temp + '?w=70&h=70'
+          })
+        })
+      }
+
       this.form = {
         id: item.id,
         name: item.name,   // 项目名称
         code: item.code,   // 项目编号
         area: item.area,  // 项目区域
         description: item.description,  // 项目描述,
-        cover: [],   // 封面图片,
-        content: [], //内容图片,
+        cover: [item.cover],   // 封面图片,
+        content: item.images.split(',') || [], //内容图片,
+        coverList: [coverListItem],
+        contentList: contentList,
         createTime: new Date(item.createTime), //创建时间
         createUser: item.createUser, //创建人
         isTop: String(item.isTop), // 是否首页
@@ -225,6 +244,7 @@ export default {
 
     removeCover(file, fileList) {
       this.form.cover.splice(0, 1);
+      this.form.coverList.splice(0, 1);
     },
 
     uploadContent(response, file, fileList) {
@@ -233,16 +253,25 @@ export default {
         fileList.map((item) => {
           if (item.response) {
             this.form.content.push(item.response.data)
+          } else if (item.url) {
+            let list = item.url.split('/');
+            let len = list.length
+            this.form.content.push(list[len - 1].split('?')[0]);
           }
         })
       }
     },
     removeContent(file, fileList) {
+      console.log(fileList)
       if (fileList.length) {
         this.form.content = [];
         fileList.map((item) => {
           if (item.response) {
             this.form.content.push(item.response.data)
+          } else if (item.url) {
+            let list = item.url.split('/');
+            let len = list.length
+            this.form.content.push(list[len - 1].split('?')[0]);
           }
         })
       }
@@ -283,22 +312,8 @@ export default {
                 data: param,
                 dataType: "json",
                 success: () => {
-                  this.form = {
-                    id: '',
-                    name: '',   // 项目名称
-                    code: '',   // 项目编号
-                    area: '',  // 项目区域
-                    description: '',  // 项目描述,
-                    cover: [],   // 封面图片
-                    content: [], //内容图片,
-                    createTime: '', //创建时间
-                    createUser: '', //创建人
-                    isTop: '1', // 是否首页
-                  };
-                  this.dialogTableVisible = false;
                   this.getTableList(this.pageNum);
-                  this.$refs.uploadCover.clearFiles();
-                  this.$refs.uploadContent.clearFiles();
+                  this.handleCloseDialog();
                   this.$message({
                     type: 'success',
                     message: '编辑成功！'
@@ -318,22 +333,8 @@ export default {
                 data: param,
                 dataType: "json",
                 success: () => {
-                  this.form = {
-                    id: '',
-                    name: '',   // 项目名称
-                    code: '',   // 项目编号
-                    area: '',  // 项目区域
-                    description: '',  // 项目描述,
-                    cover: [],   // 封面图片
-                    content: [], //内容图片,
-                    createTime: '', //创建时间
-                    createUser: '', //创建人
-                    isTop: '1', // 是否首页
-                  };
-                  this.dialogTableVisible = false;
+                  this.handleCloseDialog()
                   this.getTableList(this.pageNum);
-                  this.$refs.uploadCover.clearFiles();
-                  this.$refs.uploadContent.clearFiles();
                   this.$message({
                     type: 'success',
                     message: '新建成功！'
@@ -364,6 +365,8 @@ export default {
         description: '',  // 项目描述,
         cover: [],   // 封面图片
         content: [], //内容图片,
+        coverList: [],
+        contentList: [],
         createTime: '', //创建时间
         createUser: '', //创建人
         isTop: '1', // 是否首页

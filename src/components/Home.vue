@@ -130,9 +130,7 @@ export default {
           url: ''
         },
       ],
-      cityArea: [
-
-      ],
+      cityArea: [],
 
       cityAreaIndex: {},
       townArea: {},
