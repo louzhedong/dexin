@@ -13,7 +13,7 @@
           <span class="works" @click="handleClick">作品·WORKS</span>
         </div>
         <ul class="tab-right">
-          <li v-for="(item, index) in tabList" :key="index">
+          <li v-for="(item, index) in tabList" :key="index" @click="handleClickTab(item)">
             <div class="name">{{item.name}}</div>
             <div class="enname">{{item.enName}}</div>
           </li>
@@ -102,7 +102,7 @@ export default {
         {
           name: '项目资料',
           enName: 'INFORMATION',
-          url: ''
+          url: 'http://www.baidu.com'
         },
         {
           name: '产品系列',
@@ -156,6 +156,10 @@ export default {
   },
 
   methods: {
+    handleClickTab(item) {
+      window.location.href = item.url;
+    },
+
     handleClick() {
       this.enter = !this.enter;
       if (this.cityArea.length === 0) {
