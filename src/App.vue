@@ -13,7 +13,7 @@ export default {
 
 <style lang="less">
 #app {
-  font-family: Microsoft YaHei,SimSun,sans-serif;
+  font-family: arial;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   position: absolute;
