@@ -5,15 +5,22 @@
 </template>
 
 <script>
-
 export default {
-  name: 'app'
-}
+  name: "app"
+};
 </script>
 
 <style lang="less">
+@font-face {
+  font-family: gara;
+  src: url(./font/gara15.ttf);
+}
+@font-face {
+  font-family: laobaosong;
+  src: url(./font/laobaosong.ttf);
+}
 #app {
-  font-family: arial;
+  font-family: gara laobaosong;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   position: absolute;
