@@ -63,7 +63,10 @@
           </li>
         </ul>
       </div>
-      <div class="cover-left" v-else>
+      <div class="cover-left animated fadeIn" v-else>
+        <div class="state">
+      德信地产  设计研发中心
+    </div>
         <div class="cover-top">
           <span class="works" @click="handleClick">作品·WORKS</span>
         </div>
@@ -71,7 +74,7 @@
           <li class="active">
             {{townArea.name}}
           </li>
-          <li @click="handleReturnCilck">
+          <li @click="handleReturnCilck" class="list-back">
             返回
           </li>
         </ul>
@@ -408,16 +411,6 @@ export default {
       width: 480px;
       height: 460px;
       overflow-y: scroll;
-      &::-webkit-scrollbar {
-        width: 10px;
-        height: 10px;
-      }
-      &::-webkit-scrollbar-track {
-        background: #ffffff;
-      }
-      &::-webkit-scrollbar-thumb {
-        background: #f2f2f2;
-      }
 
       padding-right: 15px;
       .thumbnail {
@@ -474,6 +467,25 @@ export default {
       }
     }
   }
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-button:start:decrement,
+	/*显示滚动条上方的渐减按钮*/
+	::-webkit-scrollbar-button:end:increment {
+	    display: block;
+	}
+
+  ::-webkit-scrollbar-button:start:decrement {
+    background-image: url(../assets/uparraw.png);
+  }
+  ::-webkit-scrollbar-track {
+    background: #ffffff;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #f2f2f2;
+  }
   .body-cover {
     flex: 1;
     .cover-left {
@@ -485,6 +497,7 @@ export default {
         line-height: 30px;
         padding-left: 20px;
         color: #947c4a;
+        background: #f2f2f2;
       }
       width: 300px;
       height: 100%;
@@ -494,8 +507,8 @@ export default {
         linear,
         left top,
         right top,
-        from(#D0C1AB),
-        to(#E4DCD0)
+        from(#d0c1ab),
+        to(#e4dcd0)
       );
       & > .cover-top {
         height: 100px;
@@ -547,6 +560,10 @@ export default {
             to(#9b7f40)
           );
         }
+        li.list-back:hover {
+          color: #947c4a;
+          background: rgba(0, 0, 0, 0);
+        }
       }
     }
     .cover-right {
@@ -571,14 +588,13 @@ export default {
       .detail-list {
         list-style: none;
         display: inline-block;
-        width: 130px;
-        height: 400px;
-        overflow-y: auto;
+        width: 120px;
+        height: 480px;
         padding-left: 0px;
         vertical-align: middle;
         li {
           cursor: pointer;
-          width: 130px;
+          width: 120px;
           img {
             width: 100%;
           }
@@ -586,9 +602,10 @@ export default {
       }
       .big-img {
         vertical-align: middle;
-        margin-left: 50px;
+        margin-left: 30px;
         display: inline-block;
-        height: 400px;
+        height: 440px;
+        margin-bottom: 40px;
         img {
           height: 100%;
         }
