@@ -207,6 +207,7 @@ export default {
           .removeClass("active");
         event.target.classList.add("active");
         this.cityAreaIndex = item;
+       
       }
     },
 
@@ -232,6 +233,10 @@ export default {
     // 点击town 列表里具体某个图片
     handleClickTownIndex(item) {
       this.townAreaIndexImage = item;
+      $(".big-img img").addClass("animated fadeIn");
+      setTimeout(() => {
+        $(".big-img img").removeClass("fadeIn animated");
+      }, 1000);
     },
 
     // 返回按钮
@@ -468,17 +473,20 @@ export default {
     }
   }
   ::-webkit-scrollbar {
-    width: 10px;
+    width: 15px;
     height: 10px;
   }
   ::-webkit-scrollbar-button:start:decrement,
-	/*显示滚动条上方的渐减按钮*/
-	::-webkit-scrollbar-button:end:increment {
-	    display: block;
-	}
+  /*显示滚动条上方的渐减按钮*/ ::-webkit-scrollbar-button:end:increment {
+    display: block;
+  }
+  /* 定义滚动条渐增按扭的样式 */
+  ::-webkit-scrollbar-button:end:increment {
+    background-image: url(../assets/scroll_cntrl_dwn.png);
+  }
 
   ::-webkit-scrollbar-button:start:decrement {
-    background-image: url(../assets/uparraw.png);
+    background-image: url(../assets/scroll_cntrl_up.png);
   }
   ::-webkit-scrollbar-track {
     background: #ffffff;
