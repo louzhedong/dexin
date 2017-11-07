@@ -36,7 +36,7 @@
                 {{formatDate('YYYY年MM月', item.createTime)}}
               </div>
               <div class="name">
-                中国·浙江·舟山
+                {{item.address}}
               </div>
               <div class="title">
                 {{item.name}}
@@ -207,7 +207,6 @@ export default {
           .removeClass("active");
         event.target.classList.add("active");
         this.cityAreaIndex = item;
-       
       }
     },
 
@@ -416,7 +415,28 @@ export default {
       width: 480px;
       height: 460px;
       overflow-y: scroll;
+      &::-webkit-scrollbar {
+        width: 15px;
+        height: 10px;
+      }
+      &::-webkit-scrollbar-button:start:decrement,
+      /*显示滚动条上方的渐减按钮*/ ::-webkit-scrollbar-button:end:increment {
+        display: block;
+      }
+      /* 定义滚动条渐增按扭的样式 */
+      &::-webkit-scrollbar-button:end:increment {
+        background-image: url(../assets/scroll_cntrl_dwn.png);
+      }
 
+      &::-webkit-scrollbar-button:start:decrement {
+        background-image: url(../assets/scroll_cntrl_up.png);
+      }
+      &::-webkit-scrollbar-track {
+        background: #ffffff;
+      }
+      &::-webkit-scrollbar-thumb {
+        background: #f2f2f2;
+      }
       padding-right: 15px;
       .thumbnail {
         margin-top: 0px;
@@ -472,28 +492,7 @@ export default {
       }
     }
   }
-  ::-webkit-scrollbar {
-    width: 15px;
-    height: 10px;
-  }
-  ::-webkit-scrollbar-button:start:decrement,
-  /*显示滚动条上方的渐减按钮*/ ::-webkit-scrollbar-button:end:increment {
-    display: block;
-  }
-  /* 定义滚动条渐增按扭的样式 */
-  ::-webkit-scrollbar-button:end:increment {
-    background-image: url(../assets/scroll_cntrl_dwn.png);
-  }
 
-  ::-webkit-scrollbar-button:start:decrement {
-    background-image: url(../assets/scroll_cntrl_up.png);
-  }
-  ::-webkit-scrollbar-track {
-    background: #ffffff;
-  }
-  ::-webkit-scrollbar-thumb {
-    background: #f2f2f2;
-  }
   .body-cover {
     flex: 1;
     .cover-left {
