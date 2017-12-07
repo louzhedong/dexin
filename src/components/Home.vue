@@ -2,20 +2,17 @@
   <div class="home-main">
     <div class="header">
       <div class="state">
-      德信地产  设计研发中心
+      <span>德信地产</span>
+      <span style="float: right; margin-right:20px;">设计研发中心</span>
     </div>
       <div class="logo">
-        <div class="title">
-          <div class="title-top">
-            <img src="../assets/logo.png">
-            <span>产品标准化应用平台</span>
-            </div>
-          <div class="title-bottom">Product Knowledge Center</div>
-        </div>
+         <img src="../assets/logo.png">
       </div>
       <div class="tab">
         <div class="tab-left">
-          <span class="works" @click="handleClick">作品·WORKS</span>
+          <div class="works-div">
+            <span class="works" @click="handleClick">作品 · WORKS</span>
+          </div>
         </div>
         <ul class="tab-right">
           <li v-for="(item, index) in tabList" :key="index" @click="handleClickTab(item)">
@@ -46,16 +43,23 @@
         </ul>
       </div>
       <div class="body-right">
-        <img class="img" :src="jointImageOrigin(coverItem.cover)" alt="" @click="indexImgClick(coverItem)">
+        <div v-for="(item, index) in coverItem" :key="index">
+           <transition name="fade-in-linear">
+              <img :src="jointImageOrigin(item.cover)" alt="" @click="indexImgClick(item)" :key="item.cover">
+           </transition>
+        </div>
       </div>
     </div>
     <div class="body-cover" v-else>
       <div class="cover-left animated fadeIn" v-if="!showDetial">
-      <div class="state">
-      德信地产  设计研发中心
-    </div>
+        <div class="state">
+           <span>德信地产</span>
+            <span style="float: right; margin-right:20px;">设计研发中心</span>
+        </div>
         <div class="cover-top">
-          <span class="works" @click="handleClick">作品·WORKS</span>
+          <div class="works-div">
+            <span class="works" @click="handleClick">作品 · WORKS</span>
+          </div>
         </div>
         <ul class="cover-bottom">
           <li v-for="(item, index) in cityArea" :key="index" :class="[index === 0 ? 'active' : '']" @click="changeAreaChoose(item, $event)">
@@ -65,10 +69,12 @@
       </div>
       <div class="cover-left animated fadeIn" v-else>
         <div class="state">
-      德信地产  设计研发中心
-    </div>
+         <span>德信地产</span>
+        </div>
         <div class="cover-top">
-          <span class="works" @click="handleClick">作品·WORKS</span>
+          <div class="works-div">
+            <span class="works" @click="handleClick">作品 · WORKS</span>
+          </div>
         </div>
         <ul class="cover-bottom">
           <li class="active">
@@ -81,8 +87,8 @@
       </div>
       <div class="cover-right" v-if="!showDetial">
         <div class="image" v-for="(item, index) in cityAreaIndex.projectList" :key="index" @click="handleShowDetail(item)">
-          <img :src="jointImageMiddle(item.cover)" alt="">
-          <div class="image-name">{{item.name}}</div>
+            <img :src="jointImageMiddle(item.cover)" alt="">
+            <div class="image-name">{{item.name}}</div>
         </div>
       </div>
       <div class="cover-right" v-else>
@@ -93,7 +99,12 @@
         </ul>
 
         <div class="big-img">
-          <img :src="jointImageOrigin(townAreaIndexImage)" alt="">
+            <div v-for="(theImage, key) in townAreaIndexImage" :key="key">
+              <transition name="fade-in-linear">
+              <img :src="jointImageOrigin(theImage)" :key="theImage"/>
+               </transition>
+            </div>
+         
         </div>
       </div>
     </div>
@@ -107,9 +118,11 @@ export default {
   data() {
     return {
       describeData: [],
-      coverItem: {
-        cover: ""
-      },
+      coverItem: [
+        {
+          cover: ""
+        }
+      ],
       tabList: [
         {
           name: "项目资料",
@@ -146,7 +159,7 @@ export default {
 
       cityAreaIndex: {},
       townArea: {},
-      townAreaIndexImage: "",
+      townAreaIndexImage: [],
       enter: true, //是否显示首页
       showDetial: false // 是否显示具体的详情页
     };
@@ -161,7 +174,7 @@ export default {
       success: res => {
         this.describeData = res.data;
         if (res.data) {
-          this.coverItem = res.data[0];
+          this.coverItem[0] = res.data[0];
         }
       }
     });
@@ -192,11 +205,11 @@ export default {
 
     // 点击首页左边图标
     handleClickNavbar(index) {
-      this.coverItem = this.describeData[index];
-      $(".body-right .img").addClass("animated fadeIn");
-      setTimeout(() => {
-        $(".body-right .img").removeClass("fadeIn animated");
-      }, 1000);
+      this.coverItem.splice(0, 1, this.describeData[index]);
+      // $(".body-right .img").addClass("animated fadeIn");
+      // setTimeout(() => {
+      //   $(".body-right .img").removeClass("fadeIn animated");
+      // }, 1000);
     },
 
     // 切换区域选项
@@ -224,18 +237,18 @@ export default {
           this.townArea = res.data;
           let imageList = res.data.images.split(",");
           this.townArea.imageList = imageList;
-          this.townAreaIndexImage = imageList[0];
+          this.townAreaIndexImage[0] = imageList[0];
         }
       });
     },
 
     // 点击town 列表里具体某个图片
     handleClickTownIndex(item) {
-      this.townAreaIndexImage = item;
-      $(".big-img img").addClass("animated fadeIn");
-      setTimeout(() => {
-        $(".big-img img").removeClass("fadeIn animated");
-      }, 1000);
+      this.townAreaIndexImage.splice(0, 1, item);
+      // $(".big-img img").addClass("animated fadeIn");
+      // setTimeout(() => {
+      //   $(".big-img img").removeClass("fadeIn animated");
+      // }, 1000);
     },
 
     // 返回按钮
@@ -272,7 +285,7 @@ export default {
           this.townArea = res.data;
           let imageList = res.data.images.split(",");
           this.townArea.imageList = imageList;
-          this.townAreaIndexImage = imageList[0];
+          this.townAreaIndexImage[0] = imageList[0];
         }
       });
     },
@@ -324,54 +337,38 @@ export default {
 #app {
   .header {
     background-color: #f2f2f2;
-    height: 200px;
+    height: 260px;
     .state {
-      margin-bottom: 20px;
+      margin-bottom: 35px;
       border-bottom: 2px #947c4a solid;
-      height: 30px;
-      line-height: 30px;
+      height: 40px;
+      line-height: 40px;
       padding-left: 20px;
       color: #947c4a;
+      font-size: 12px;
     }
     .logo {
       text-align: center;
-      .title {
-        display: inline-block;
-        font-size: 21px;
-        vertical-align: middle;
-        .title-top {
-          img {
-            width: 100px;
-            display: inline-block;
-            vertical-align: top;
-          }
-          span {
-            display: inline-block;
-            line-height: 36px;
-            height: 36px;
-          }
-        }
-        .title-bottom {
-          font-size: 22px;
-        }
+      img {
+        width: 344px;
       }
     }
     .tab {
       .tab-left {
-        width: 280px;
+        width: 344px;
         display: inline-block;
         text-align: right;
         vertical-align: middle;
-        .works {
-          height: 60px;
-          line-height: 60px;
+        .works-div {
           border-bottom: 1px solid #947c4a;
-          color: #947c4a;
-          font-size: 25px;
-          cursor: pointer;
-          transition: font 1s;
-          &:hover {
-            font-size: 26px;
+          width: 195px;
+          float: right;
+          .works {
+            height: 60px;
+            line-height: 60px;
+            color: #947c4a;
+            font-size: 30px;
+            cursor: pointer;
           }
         }
       }
@@ -381,10 +378,9 @@ export default {
         li {
           list-style: none;
           float: left;
-          width: 90px;
+          width: 130px;
           text-align: center;
-          margin-right: 30px;
-          padding: 15px;
+          padding: 15px 10px;
           cursor: pointer;
           &:hover {
             background: -webkit-gradient(
@@ -397,24 +393,25 @@ export default {
             color: #fff;
           }
           .name {
-            font-size: 14px;
+            font-size: 15px;
           }
           .enname {
-            font-size: 12px;
+            font-size: 11px;
           }
         }
       }
     }
   }
   .body {
-    margin-top: 40px;
+    margin-top: 25px;
     margin-bottom: 40px;
     flex: 1;
     display: flex;
     .body-left {
-      width: 480px;
+      width: 550px;
       height: 460px;
       overflow-y: scroll;
+      padding-top: 20px;
       &::-webkit-scrollbar {
         width: 15px;
         height: 10px;
@@ -451,6 +448,7 @@ export default {
             width: 210px;
             display: inline-block;
             vertical-align: middle;
+            height: inherit;
           }
           .describe {
             &:hover {
@@ -458,22 +456,22 @@ export default {
             }
             display: inline-block;
             background-color: #f2f2f2;
-            width: 150px;
+            width: 180px;
             vertical-align: middle;
             height: inherit;
             text-align: left;
             margin-left: -10px;
             padding-left: 5px;
             .date {
-              font-size: 13px;
+              font-size: 14px;
               margin: 10px 0;
             }
             .name {
-              font-size: 13px;
+              font-size: 14px;
             }
             .title {
               margin-top: 10px;
-              font-size: 18px;
+              font-size: 24px;
               color: #947c4a;
             }
           }
@@ -481,14 +479,22 @@ export default {
       }
     }
     .body-right {
-      height: 500px;
+      height: 460px;
       margin-left: 20px;
-      width: 750px;
+      width: 700px;
+      margin-top: 20px;
+      .fade-in-linear-enter-active {
+        transition: opacity 2.5s;
+      }
+
+      .fade-in-linear-enter {
+        opacity: 0;
+      }
       img {
         cursor: pointer;
         width: 100%;
+        height: 100%;
         box-shadow: 6px 4px 16px #9e9e9e;
-        animation-duration: 2s;
       }
     }
   }
@@ -498,15 +504,16 @@ export default {
     .cover-left {
       animation-duration: 2s;
       .state {
-        margin-bottom: 20px;
+        margin-bottom: 35px;
         border-bottom: 2px #947c4a solid;
-        height: 30px;
-        line-height: 30px;
+        height: 40px;
+        line-height: 40px;
         padding-left: 20px;
         color: #947c4a;
         background: #f2f2f2;
+        font-size: 12px;
       }
-      width: 300px;
+      width: 364px;
       height: 100%;
       position: absolute;
       bottom: 0;
@@ -518,20 +525,20 @@ export default {
         to(#e4dcd0)
       );
       & > .cover-top {
-        height: 100px;
+        height: 110px;
         text-align: right;
         margin-right: 20px;
-        margin-top: 110px;
-        .works {
-          height: 60px;
-          line-height: 60px;
+        margin-top: 116px;
+        .works-div {
           border-bottom: 1px solid #947c4a;
-          color: #947c4a;
-          font-size: 25px;
-          cursor: pointer;
-          transition: font 1s;
-          &:hover {
-            font-size: 26px;
+          width: 195px;
+          float: right;
+          .works {
+            height: 60px;
+            line-height: 60px;
+            color: #947c4a;
+            font-size: 30px;
+            cursor: pointer;
           }
         }
       }
@@ -539,6 +546,7 @@ export default {
         list-style: none;
         width: 100%;
         padding-left: 0;
+        padding-top: 5px;
         li {
           height: 60px;
           line-height: 60px;
@@ -549,8 +557,8 @@ export default {
             color: #fff;
             background: -webkit-gradient(
               linear,
-              left top,
               right top,
+              left top,
               from(#594849),
               to(#9b7f40)
             );
@@ -561,8 +569,8 @@ export default {
           color: #fff;
           background: -webkit-gradient(
             linear,
-            left top,
             right top,
+            left top,
             from(#594849),
             to(#9b7f40)
           );
@@ -574,12 +582,13 @@ export default {
       }
     }
     .cover-right {
-      margin-left: 350px;
-      padding-top: 40px;
+      margin-left: 364px;
+      padding-top: 26px;
       margin-right: 50px;
+      padding-left: 55px;
       .image {
         cursor: pointer;
-        width: 280px;
+        width: 285px;
         margin-right: 5px;
         margin-bottom: 5px;
         display: inline-block;
@@ -590,31 +599,46 @@ export default {
           text-align: center;
           color: #947c4a;
           font-size: 18px;
+          margin-bottom: 10px;
         }
       }
       .detail-list {
         list-style: none;
         display: inline-block;
         width: 120px;
-        height: 480px;
+        height: 450px;
         padding-left: 0px;
         vertical-align: middle;
+        margin-top: 0px;
+        overflow: auto;
         li {
           cursor: pointer;
-          width: 120px;
+          width: 112px;
+          margin-bottom: 6px;
           img {
             width: 100%;
           }
         }
       }
       .big-img {
+        .fade-in-linear-enter-active {
+          transition: opacity 2.5s;
+        }
+
+        .fade-in-linear-enter {
+          opacity: 0;
+        }
         vertical-align: middle;
         margin-left: 30px;
         display: inline-block;
         height: 440px;
         margin-bottom: 40px;
+        width: 725px;
+        overflow: hidden;
         img {
+          margin-top: 7px;
           height: 100%;
+          width: 100%;
         }
       }
     }
@@ -627,13 +651,13 @@ export default {
   }
 }
 
-@media screen and (min-width: 1440px) and (max-width: 1639px) {
+@media screen and (min-width: 1441px) and (max-width: 1639px) {
   .home-main {
     zoom: 1.1;
   }
 }
 
-@media screen and (min-width: 1329px) and (max-width: 1439px) {
+@media screen and (min-width: 1329px) and (max-width: 1440px) {
   .home-main {
     zoom: 1;
   }

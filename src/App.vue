@@ -13,7 +13,7 @@ export default {
 <style lang="less">
 @font-face {
   font-family: gara;
-  src: url(./font/gara15.ttf);
+  src: url(./font/GARATCS.ttf)
 }
 @font-face {
   font-family: laobaosong;

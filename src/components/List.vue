@@ -2,7 +2,7 @@
  * @Author: Michael 
  * @Date: 2017-10-15 20:10:39 
  * @Last Modified by: Michael
- * @Last Modified time: 2017-11-07 15:27:13
+ * @Last Modified time: 2017-12-06 15:28:18
  * 后台表格
  */
 
@@ -94,7 +94,7 @@ export default {
       dialogTableVisible: false, // 模态框显示
       operate: "add",
 
-      uploadUrl: window.Config.server + "/image/upload",
+      uploadUrl: 'http://localhost:8080/image/upload',
       form: {
         id: "",
         name: "", // 项目名称
