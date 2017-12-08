@@ -43,7 +43,7 @@
         </ul>
       </div>
       <div class="body-right">
-        <div v-for="(item, index) in coverItem" :key="index">
+        <div v-for="(item, index) in coverItem" :key="index" style="height: 100%">
            <transition name="fade-in-linear">
               <img :src="jointImageOrigin(item.cover)" alt="" @click="indexImgClick(item)" :key="item.cover">
            </transition>
@@ -54,7 +54,6 @@
       <div class="cover-left animated fadeIn" v-if="!showDetial">
         <div class="state">
            <span>德信地产</span>
-            <span style="float: right; margin-right:20px;">设计研发中心</span>
         </div>
         <div class="cover-top">
           <div class="works-div">
@@ -99,7 +98,7 @@
         </ul>
 
         <div class="big-img">
-            <div v-for="(theImage, key) in townAreaIndexImage" :key="key">
+            <div v-for="(theImage, key) in townAreaIndexImage" :key="key" style="height:100%">
               <transition name="fade-in-linear">
               <img :src="jointImageOrigin(theImage)" :key="theImage"/>
                </transition>
@@ -337,12 +336,12 @@ export default {
 #app {
   .header {
     background-color: #f2f2f2;
-    height: 260px;
+    height: 250px;
     .state {
       margin-bottom: 35px;
       border-bottom: 2px #947c4a solid;
-      height: 40px;
-      line-height: 40px;
+      height: 32px;
+      line-height: 32px;
       padding-left: 20px;
       color: #947c4a;
       font-size: 12px;
@@ -364,8 +363,8 @@ export default {
           width: 195px;
           float: right;
           .works {
-            height: 60px;
-            line-height: 60px;
+            height: 55px;
+            line-height: 55px;
             color: #947c4a;
             font-size: 30px;
             cursor: pointer;
@@ -380,7 +379,7 @@ export default {
           float: left;
           width: 130px;
           text-align: center;
-          padding: 15px 10px;
+          padding: 10px 10px;
           cursor: pointer;
           &:hover {
             background: -webkit-gradient(
@@ -404,12 +403,11 @@ export default {
   }
   .body {
     margin-top: 25px;
-    margin-bottom: 40px;
     flex: 1;
     display: flex;
     .body-left {
       width: 550px;
-      height: 460px;
+      height: 440px;
       overflow-y: scroll;
       padding-top: 20px;
       &::-webkit-scrollbar {
@@ -441,9 +439,9 @@ export default {
         cursor: pointer;
         li {
           list-style: none;
-          height: 127px;
+          height: 117px;
           text-align: right;
-          margin-bottom: 40px;
+          margin-bottom: 31px;
           img {
             width: 210px;
             display: inline-block;
@@ -479,7 +477,7 @@ export default {
       }
     }
     .body-right {
-      height: 460px;
+      height: 410px;
       margin-left: 20px;
       width: 700px;
       margin-top: 20px;
@@ -506,8 +504,8 @@ export default {
       .state {
         margin-bottom: 35px;
         border-bottom: 2px #947c4a solid;
-        height: 40px;
-        line-height: 40px;
+        height: 32px;
+        line-height: 32px;
         padding-left: 20px;
         color: #947c4a;
         background: #f2f2f2;
@@ -528,7 +526,7 @@ export default {
         height: 110px;
         text-align: right;
         margin-right: 20px;
-        margin-top: 116px;
+        margin-top: 108px;
         .works-div {
           border-bottom: 1px solid #947c4a;
           width: 195px;
@@ -583,7 +581,7 @@ export default {
     }
     .cover-right {
       margin-left: 364px;
-      padding-top: 26px;
+      padding-top: 10px;
       margin-right: 50px;
       padding-left: 55px;
       .image {
@@ -594,6 +592,7 @@ export default {
         display: inline-block;
         img {
           width: 100%;
+          height: 156px;
         }
         .image-name {
           text-align: center;
@@ -606,7 +605,7 @@ export default {
         list-style: none;
         display: inline-block;
         width: 120px;
-        height: 450px;
+        height: 406px;
         padding-left: 0px;
         vertical-align: middle;
         margin-top: 0px;
@@ -614,9 +613,11 @@ export default {
         li {
           cursor: pointer;
           width: 112px;
+          height: 62px;
           margin-bottom: 6px;
           img {
             width: 100%;
+            height: 100%;
           }
         }
       }
@@ -629,14 +630,14 @@ export default {
           opacity: 0;
         }
         vertical-align: middle;
-        margin-left: 30px;
+        margin-left: 25px;
         display: inline-block;
-        height: 440px;
+        height: 406px;
         margin-bottom: 40px;
         width: 725px;
         overflow: hidden;
         img {
-          margin-top: 7px;
+          margin-top: 12px;
           height: 100%;
           width: 100%;
         }
@@ -644,46 +645,34 @@ export default {
     }
   }
 }
-
-@media screen and (min-width: 1640px) {
+@media screen and (min-width: 1699px){
   .home-main {
     zoom: 1.2;
   }
 }
 
-@media screen and (min-width: 1441px) and (max-width: 1639px) {
+@media screen and (min-width: 1600px) and (max-width: 1698px) {
   .home-main {
     zoom: 1.1;
   }
 }
 
-@media screen and (min-width: 1329px) and (max-width: 1440px) {
+@media screen and (min-width: 1440px) and (max-width: 1599px) {
   .home-main {
     zoom: 1;
   }
 }
 
-@media screen and (min-width: 1200px) and (max-width: 1328px) {
+@media screen and (min-width: 1329px) and (max-width: 1439px) {
   .home-main {
     zoom: 0.9;
   }
 }
 
-@media screen and (min-width: 1065px) and(max-width: 1199px) {
+@media screen and (min-width: 1200px) and (max-width: 1328px) {
   .home-main {
     zoom: 0.8;
   }
 }
 
-@media screen and (min-width: 935px) and (max-width: 1064px) {
-  .home-main {
-    zoom: 0.7;
-  }
-}
-
-@media screen and (max-width: 934px) {
-  .home-main {
-    zoom: 0.6;
-  }
-}
 </style>
