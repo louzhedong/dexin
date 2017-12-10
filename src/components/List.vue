@@ -26,6 +26,7 @@
             <el-option label="宁波区域" value="宁波区域"></el-option>
             <el-option label="浙北区域" value="浙北区域"></el-option>
             <el-option label="浙中区域" value="浙中区域"></el-option>
+            <el-option label="其他区域" value="其他区域"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="创建时间" prop="createTime">
@@ -34,6 +35,18 @@
         </el-form-item>
         <el-form-item label="创建人">
           <el-input v-model="form.createUser"></el-input>
+        </el-form-item>
+        <el-form-item label="位置">
+          <el-input v-model="form.location"></el-input>
+        </el-form-item>
+        <el-form-item label="时间">
+          <el-input v-model="form.projectDate"></el-input>
+        </el-form-item>
+        <el-form-item label="规模">
+          <el-input v-model="form.scale"></el-input>
+        </el-form-item>
+        <el-form-item label="系列">
+          <el-input v-model="form.situation"></el-input>
         </el-form-item>
         <el-form-item label="是否首页">
           <el-radio v-model="form.isTop" label="1">是</el-radio>
@@ -94,7 +107,7 @@ export default {
       dialogTableVisible: false, // 模态框显示
       operate: "add",
 
-      uploadUrl: 'http://localhost:8080/image/upload',
+      uploadUrl: "http://localhost:8080/image/upload",
       form: {
         id: "",
         name: "", // 项目名称
@@ -108,7 +121,11 @@ export default {
         contentList: [],
         createTime: "", //创建时间
         createUser: "", //创建人
-        isTop: "1" // 是否首页
+        isTop: "1", // 是否首页
+        location: "", // 位置
+        scale: "", // 规模
+        situation: "", // 系列
+        projectDate: "" // 时间
       },
       rules: {
         name: [
@@ -239,7 +256,11 @@ export default {
         contentList: contentList,
         createTime: new Date(item.createTime), //创建时间
         createUser: item.createUser, //创建人
-        isTop: String(item.isTop) // 是否首页
+        isTop: String(item.isTop), // 是否首页
+        location: item.location, // 位置
+        scale: item.scale, // 规模
+        situation: item.situation, // 系列
+        projectDate: item.projectDate // 时间
       };
     },
 
@@ -317,7 +338,11 @@ export default {
                 cover: form.cover[0],
                 images: form.content.join(","),
                 createUser: form.createUser,
-                isTop: form.isTop
+                isTop: form.isTop,
+                location: form.location, // 位置
+                scale: form.scale, // 规模
+                situation: form.situation, // 系列
+                projectDate: form.projectDate // 时间
               };
               if (this.form.id) {
                 //编辑
@@ -386,7 +411,11 @@ export default {
         contentList: [],
         createTime: "", //创建时间
         createUser: "", //创建人
-        isTop: "1" // 是否首页
+        isTop: "1", // 是否首页,
+        location: '', // 位置
+        scale: '', // 规模
+        situation: '', // 系列
+        projectDate: '', // 时间
       };
       this.dialogTableVisible = false;
       this.$refs.uploadCover.clearFiles();

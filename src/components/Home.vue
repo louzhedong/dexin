@@ -79,7 +79,20 @@
           <li class="active">
             {{townArea.name}}
           </li>
-          <li @click="handleReturnCilck" class="list-back">
+
+          <li class="detail" v-if="townArea.location">
+            位置：{{townArea.location}}
+          </li>
+          <li  class="detail" v-if="townArea.projectDate">
+            时间：{{townArea.projectDate}}
+          </li>
+          <li  class="detail" v-if="townArea.scale">
+            规模：{{townArea.scale}}
+          </li>
+          <li  class="detail" v-if="townArea.situation">
+            系列：{{townArea.situation}}
+          </li>
+          <li @click="handleReturnCilck" class="list-back" style="padding-left: 170px">
             返回
           </li>
         </ul>
@@ -411,7 +424,7 @@ export default {
       overflow-y: scroll;
       padding-top: 20px;
       &::-webkit-scrollbar {
-        width: 15px;
+        width: 16px;
         height: 10px;
       }
       &::-webkit-scrollbar-button:start:decrement,
@@ -548,9 +561,9 @@ export default {
         li {
           height: 60px;
           line-height: 60px;
-          padding-left: 170px;
+          padding-left: 200px;
           color: #947c4a;
-          font-size: 18px;
+          font-size: 20px;
           &:hover {
             color: #fff;
             background: -webkit-gradient(
@@ -573,6 +586,14 @@ export default {
             to(#9b7f40)
           );
         }
+        li.detail {
+          padding-left: 170px;
+          cursor: default;
+        }
+        li.detail:hover {
+          color: #947c4a;
+          background: rgba(0, 0, 0, 0);
+        }
         li.list-back:hover {
           color: #947c4a;
           background: rgba(0, 0, 0, 0);
@@ -581,7 +602,7 @@ export default {
     }
     .cover-right {
       margin-left: 364px;
-      padding-top: 10px;
+      padding-top: 25px;
       margin-right: 50px;
       padding-left: 55px;
       .image {
@@ -645,7 +666,7 @@ export default {
     }
   }
 }
-@media screen and (min-width: 1699px){
+@media screen and (min-width: 1699px) {
   .home-main {
     zoom: 1.2;
   }
@@ -674,5 +695,4 @@ export default {
     zoom: 0.8;
   }
 }
-
 </style>
