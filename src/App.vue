@@ -12,15 +12,15 @@ export default {
 
 <style lang="less">
 @font-face {
-  font-family: gara;
-  src: url(./font/GARATCS.ttf)
+  font-family: "GARATCS";
+  src: url(./font/GARATCS.ttf);
 }
 @font-face {
-  font-family: laobaosong;
-  src: url(./font/laobaosong.ttf);
+  font-family: "方正精宋简体";
+  src: url(./font/方正精宋简体.ttf);
 }
 #app {
-  font-family: gara laobaosong;
+  font-family: GARATCS, "方正精宋简体";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   position: absolute;

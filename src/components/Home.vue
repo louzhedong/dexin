@@ -10,9 +10,7 @@
       </div>
       <div class="tab">
         <div class="tab-left">
-          <div class="works-div">
             <span class="works" @click="handleClick">作品 · WORKS</span>
-          </div>
         </div>
         <ul class="tab-right">
           <li v-for="(item, index) in tabList" :key="index" @click="handleClickTab(item)">
@@ -56,9 +54,7 @@
            <span>德信地产</span>
         </div>
         <div class="cover-top">
-          <div class="works-div">
             <span class="works" @click="handleClick">作品 · WORKS</span>
-          </div>
         </div>
         <ul class="cover-bottom">
           <li v-for="(item, index) in cityArea" :key="index" :class="[index === 0 ? 'active' : '']" @click="changeAreaChoose(item, $event)">
@@ -71,9 +67,7 @@
          <span>德信地产</span>
         </div>
         <div class="cover-top">
-          <div class="works-div">
             <span class="works" @click="handleClick">作品 · WORKS</span>
-          </div>
         </div>
         <ul class="cover-bottom">
           <li class="active">
@@ -371,17 +365,15 @@ export default {
         display: inline-block;
         text-align: right;
         vertical-align: middle;
-        .works-div {
+        .works {
+          height: 60px;
+          line-height: 60px;
           border-bottom: 1px solid #947c4a;
-          width: 195px;
-          float: right;
-          .works {
-            height: 55px;
-            line-height: 55px;
-            color: #947c4a;
-            font-size: 30px;
-            cursor: pointer;
-          }
+          color: #947c4a;
+          font-size: 30px;
+          cursor: pointer;
+          display: inline-block;
+          font-weight: bold;
         }
       }
       .tab-right {
@@ -484,6 +476,7 @@ export default {
               margin-top: 10px;
               font-size: 24px;
               color: #947c4a;
+              font-weight: bold;
             }
           }
         }
@@ -540,17 +533,13 @@ export default {
         text-align: right;
         margin-right: 20px;
         margin-top: 108px;
-        .works-div {
-          border-bottom: 1px solid #947c4a;
-          width: 195px;
-          float: right;
-          .works {
-            height: 60px;
-            line-height: 60px;
-            color: #947c4a;
-            font-size: 30px;
-            cursor: pointer;
-          }
+        .works {
+          line-height: 60px;
+          color: #947c4a;
+          font-size: 30px;
+          cursor: pointer;
+          display: inline-block;
+          font-weight: bold;
         }
       }
       .cover-bottom {
@@ -584,10 +573,10 @@ export default {
             left top,
             from(#594849),
             to(#9b7f40)
-          );
+          )
         }
         li.detail {
-          padding-left: 170px;
+          padding-left: 130px;
           cursor: default;
         }
         li.detail:hover {
