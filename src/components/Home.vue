@@ -420,16 +420,16 @@ export default {
         height: 10px;
       }
       &::-webkit-scrollbar-button:start:decrement,
-      /*显示滚动条上方的渐减按钮*/ ::-webkit-scrollbar-button:end:increment {
+      &::-webkit-scrollbar-button:end:increment {
         display: block;
       }
       /* 定义滚动条渐增按扭的样式 */
       &::-webkit-scrollbar-button:end:increment {
-        background-image: url(../assets/scroll_cntrl_dwn.png);
+        background: url(../assets/scroll_down.png) no-repeat;
       }
 
       &::-webkit-scrollbar-button:start:decrement {
-        background-image: url(../assets/scroll_up.png);
+        background: url(../assets/scroll_up.png) no-repeat;
       }
       &::-webkit-scrollbar-track {
         background: #ffffff;
