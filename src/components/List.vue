@@ -106,8 +106,7 @@ export default {
       totalCount: 0,
       dialogTableVisible: false, // 模态框显示
       operate: "add",
-
-      uploadUrl: "http://localhost:8080/image/upload",
+      uploadUrl: window.Config.server + "/image/upload",
       form: {
         id: "",
         name: "", // 项目名称
@@ -412,10 +411,10 @@ export default {
         createTime: "", //创建时间
         createUser: "", //创建人
         isTop: "1", // 是否首页,
-        location: '', // 位置
-        scale: '', // 规模
-        situation: '', // 系列
-        projectDate: '', // 时间
+        location: "", // 位置
+        scale: "", // 规模
+        situation: "", // 系列
+        projectDate: "" // 时间
       };
       this.dialogTableVisible = false;
       this.$refs.uploadCover.clearFiles();
