@@ -10,7 +10,7 @@
       </div>
       <div class="tab">
         <div class="tab-left">
-            <span class="works" @click="handleClick">作品 · WORKS</span>
+            <span class="works" @click="handleClick" v-if="enter">作品 · WORKS</span>
         </div>
         <ul class="tab-right">
           <li v-for="(item, index) in tabList" :key="index" @click="handleClickTab(item)">
@@ -655,7 +655,12 @@ export default {
     }
   }
 }
-@media screen and (min-width: 1699px) {
+@media screen and (min-width: 1800px){
+  .home-main {
+    zoom: 1.2;
+  }
+}
+@media screen and (min-width: 1699px) and (max-width: 1799px) {
   .home-main {
     zoom: 1.2;
   }
