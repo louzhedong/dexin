@@ -429,7 +429,7 @@ export default {
       }
 
       &::-webkit-scrollbar-button:start:decrement {
-        background-image: url(../assets/scroll_cntrl_up.png);
+        background-image: url(../assets/scroll_up.png);
       }
       &::-webkit-scrollbar-track {
         background: #ffffff;
