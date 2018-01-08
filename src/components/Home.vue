@@ -91,7 +91,7 @@
           </li>
         </ul>
       </div>
-      <div class="cover-right" v-if="!showDetial">
+      <div class="cover-right" v-if="!showDetial" :class="{'show-scroll' : cityAreaIndex.projectList && cityAreaIndex.projectList.length > 6}">
         <div class="image" v-for="(item, index) in cityAreaIndex.projectList" :key="index" @click="handleShowDetail(item)">
             <img :src="jointImageMiddle(item.cover)" alt="">
             <div class="image-name">{{item.name}}</div>
@@ -473,7 +473,7 @@ export default {
               font-size: 14px;
             }
             .title {
-              margin-top: 10px;
+              margin-top: 20px;
               font-size: 24px;
               color: #947c4a;
               font-weight: bold;
@@ -487,6 +487,7 @@ export default {
       margin-left: 20px;
       width: 700px;
       margin-top: 20px;
+      overflow: hidden;
       .fade-in-linear-enter-active {
         transition: opacity 2.5s;
       }
@@ -573,10 +574,10 @@ export default {
             left top,
             from(#594849),
             to(#9b7f40)
-          )
+          );
         }
         li.detail {
-          padding-left: 130px;
+          padding-left: 155px;
           cursor: default;
         }
         li.detail:hover {
@@ -589,11 +590,37 @@ export default {
         }
       }
     }
+    .show-scroll {
+      &::-webkit-scrollbar {
+        width: 16px;
+        height: 10px;
+      }
+      &::-webkit-scrollbar-button:start:decrement,
+      &::-webkit-scrollbar-button:end:increment {
+        display: block;
+      }
+      /* 定义滚动条渐增按扭的样式 */
+      &::-webkit-scrollbar-button:end:increment {
+        background: url(../assets/scroll_down.png) no-repeat;
+      }
+
+      &::-webkit-scrollbar-button:start:decrement {
+        background: url(../assets/scroll_up.png) no-repeat;
+      }
+      &::-webkit-scrollbar-track {
+        background: #ffffff;
+      }
+      &::-webkit-scrollbar-thumb {
+        background: #f2f2f2;
+      }
+    }
     .cover-right {
       margin-left: 364px;
       padding-top: 25px;
       margin-right: 50px;
       padding-left: 55px;
+      max-height: 420px;
+      overflow-y: auto;
       .image {
         cursor: pointer;
         width: 285px;
@@ -655,9 +682,30 @@ export default {
     }
   }
 }
-@media screen and (min-width: 1800px){
+@media screen and (min-width: 1800px) {
   .home-main {
     zoom: 1.2;
+    .header {
+      .tab {
+        padding-left: 100px;
+      }
+    }
+    .body {
+      padding-left: 100px;
+    }
+    .body-cover {
+      .cover-left {
+        width: 464px !important;
+        .cover-bottom {
+          li {
+            padding-left: 300px !important;
+          }
+        }
+      }
+      .cover-right {
+        margin-left: 464px !important;
+      }
+    }
   }
 }
 @media screen and (min-width: 1699px) and (max-width: 1799px) {
