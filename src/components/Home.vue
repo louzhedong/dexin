@@ -25,8 +25,7 @@
       <div class="body-left">
         <ul class="thumbnail">
           <li v-for="(item, index) in describeData" :key="index" @click="handleClickNavbar(index)">
-            <img :src="jointImage(item.cover)" alt="">
-            <span class="describe">
+            <img :src="jointImage(item.cover)" alt=""><span class="describe">
               <div class="date">
                 {{formatDate('YYYY年MM月', item.createTime)}}
               </div>
@@ -319,7 +318,15 @@ export default {
         i = date.getMinutes(),
         s = date.getSeconds(),
         w = date.getDay(),
-        week = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"];
+        week = [
+          "星期日",
+          "星期一",
+          "星期二",
+          "星期三",
+          "星期四",
+          "星期五",
+          "星期六"
+        ];
 
       m = m < 10 ? "0" + m : m;
       d = d < 10 ? "0" + d : d;
@@ -463,8 +470,7 @@ export default {
             vertical-align: middle;
             height: inherit;
             text-align: left;
-            margin-left: -10px;
-            padding-left: 5px;
+            padding-left: 10px;
             .date {
               font-size: 14px;
               margin: 10px 0;
@@ -591,6 +597,7 @@ export default {
       }
     }
     .show-scroll {
+      overflow: auto !important;
       &::-webkit-scrollbar {
         width: 16px;
         height: 10px;
@@ -617,10 +624,10 @@ export default {
     .cover-right {
       margin-left: 364px;
       padding-top: 25px;
-      margin-right: 50px;
+      margin-right: 200px;
       padding-left: 55px;
-      max-height: 420px;
-      overflow-y: auto;
+      max-height: 380px;
+      overflow-y: hidden;
       .image {
         cursor: pointer;
         width: 285px;
@@ -698,12 +705,13 @@ export default {
         width: 464px !important;
         .cover-bottom {
           li {
-            padding-left: 300px !important;
+            padding-left: 255px !important;
           }
         }
       }
       .cover-right {
         margin-left: 464px !important;
+        margin-right: 190px !important;
       }
     }
   }
@@ -716,13 +724,57 @@ export default {
 
 @media screen and (min-width: 1600px) and (max-width: 1698px) {
   .home-main {
-    zoom: 1.1;
+    zoom: 0.9;
+    .header {
+      .tab {
+        padding-left: 180px;
+      }
+    }
+    .body {
+      padding-left: 180px;
+    }
+    .body-cover {
+      .cover-left {
+        width: 544px !important;
+        .cover-bottom {
+          li {
+            padding-left: 335px !important;
+          }
+        }
+      }
+      .cover-right {
+        margin-left: 544px !important;
+        margin-right: 190px !important;
+      }
+    }
   }
 }
 
 @media screen and (min-width: 1440px) and (max-width: 1599px) {
   .home-main {
-    zoom: 1;
+    zoom: 0.9;
+    .header {
+      .tab {
+        padding-left: 110px;
+      }
+    }
+    .body {
+      padding-left: 110px;
+    }
+    .body-cover {
+      .cover-left {
+        width: 474px !important;
+        .cover-bottom {
+          li {
+            padding-left: 260px !important;
+          }
+        }
+      }
+      .cover-right {
+        margin-left: 474px !important;
+        margin-right: 155px !important;
+      }
+    }
   }
 }
 
