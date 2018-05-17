@@ -653,11 +653,11 @@ export default {
         padding-left: 0px;
         vertical-align: middle;
         margin-top: 0px;
-        overflow: auto;
+        overflow: hidden;
         li {
           cursor: pointer;
           width: 112px;
-          height: 62px;
+          height: 68px;
           margin-bottom: 6px;
           img {
             width: 100%;
