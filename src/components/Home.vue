@@ -657,7 +657,7 @@ export default {
         li {
           cursor: pointer;
           width: 112px;
-          height: 68px;
+          height: 69px;
           margin-bottom: 6px;
           img {
             width: 100%;
